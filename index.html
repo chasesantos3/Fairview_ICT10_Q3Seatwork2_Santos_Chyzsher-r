@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Intramurals Team Checker</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: url("https://i.pinimg.com/1200x/3a/88/1a/3a881a3e8bd71222005cf9837179e599.jpg");
+    background-size: cover; 
+    padding: 40px;
+}
+.container {
+    background: #f5aa7c;
+    max-width: 520px;
+    margin: 200px auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+h2 {
+    text-align: center;
+}
+label {
+    display: block;
+    margin-top: 12px;
+}
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+}
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Intramurals Team Checker</h2>
+
+<label>
+<input type="checkbox" id="registered">
+ Confirm Online Registration
+</label>
+
+<label>
+<input type="checkbox" id="medical">
+ Confirm Medical Clearance
+</label>
+
+<label>
+Grade Level:
+<select id="grade">
+<option value="">-- Select Grade --</option>
+<option value="7">Grade 7</option>
+<option value="8">Grade 8</option>
+<option value="9">Grade 9</option>
+<option value="10">Grade 10</option>
+</select>
+</label>
+
+<label>
+Section:
+<select id="section">
+<option value="">-- Select Section --</option>
+<option value="Ruby">Ruby</option>
+<option value="Sapphire">Sapphire</option>
+<option value="Emerald">Emerald</option>
+<option value="Topaz">Topaz</option>
+<option value="Jade">Jade</option>
+</select>
+</label>
+
+<button onclick="checkEligibility()">Check Eligibility</button>
+
+<div id="result"></div>
+</div>
+
+<script>
+function checkEligibility() {
+    const registered = document.getElementById("registered").checked;
+    const medical = document.getElementById("medical").checked;
+    const grade = document.getElementById("grade").value;
+    const section = document.getElementById("section").value;
+    const result = document.getElementById("result");
+
+    if (!registered) {
+        result.innerHTML = "❌ Please register online for the Intramurals. You may do so through the official school website.";
+        return;
+    }
+
+    if (!medical) {
+        result.innerHTML = "❌ Please secure a medical clearance. You may visit the school clinic for assistance.";
+        return;
+    }
+
+    if (!grade || !section) {
+        result.innerHTML = "❌ Please select your grade and section.";
+        return;
+    }
+
+    const teams = {
+        "7-Ruby": "Yellow Tigers",
+        "7-Sapphire": "Red Bulldogs",
+        "7-Emerald": "Blue Bears",
+        "7-Topaz": "Green Hornets",
+
+        "8-Emerald": "Yellow Tigers",
+        "8-Ruby": "Red Bulldogs",
+        "8-Topaz": "Blue Bears",
+        "8-Sapphire": "Green Hornets",
+        "8-Jade": "Blue Bears",
+
+        "9-Sapphire": "Yellow Tigers",
+        "9-Topaz": "Red Bulldogs",
+        "9-Ruby": "Blue Bears",
+        "9-Jade": "Green Hornets",
+        "9-Emerald": "Green Hornets",
+
+        "10-Sapphire": "Yellow Tigers",
+        "10-Emerald": "Red Bulldogs",
+        "10-Topaz": "Blue Bears",
+        "10-Ruby": "Green Hornets"
+    };
+
+    const key = grade + "-" + section;
+
+    if (!teams[key]) {
+        result.innerHTML = "❌ Section not listed for Intramurals.";
+        return;
+    }
+
+    result.innerHTML = `
+        🎉 Congratulations! You are eligible for Intramurals! <br>
+        🏅 Your team is: <strong>${teams[key]}</strong>
+    `;
+}
+</script>
+
+</body>
+</html>
