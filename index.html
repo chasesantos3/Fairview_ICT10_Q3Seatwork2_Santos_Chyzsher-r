@@ -1,84 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Intramurals Team Checker</title>
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: url("https://i.pinimg.com/1200x/3a/88/1a/3a881a3e8bd71222005cf9837179e599.jpg");
-    background-size: cover; 
-    padding: 40px;
-}
-.container {
-    background: #f5aa7c;
-    max-width: 520px;
-    margin: 200px auto;
-    padding: 20px;
-    border-radius: 10px;
-}
-h2 {
-    text-align: center;
-}
-label {
-    display: block;
-    margin-top: 12px;
-}
-button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-}
-#result {
-    margin-top: 20px;
-    font-weight: bold;
-    text-align: center;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>Intramurals Eligibility Checker</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("https://i.pinimg.com/1200x/3c/8c/c9/3c8cc9fcc6f0474a90bfb5c9dd7cf1fc.jpg");
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            color: #d63384;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            text-align: left;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #ff69b4;
+            color: white;
+            font-weight: bold;
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff85c1;
+        }
+
+        #result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
-<h2>Intramurals Team Checker</h2>
+    <h2>Intramurals Eligibility Checker</h2>
 
-<label>
-<input type="checkbox" id="registered">
- Confirm Online Registration
-</label>
+    <label>
+        <input type="checkbox" id="registered">
+        Confirmed Online Registration
+    </label>
 
-<label>
-<input type="checkbox" id="medical">
- Confirm Medical Clearance
-</label>
+    <label>
+        <input type="checkbox" id="medical">
+        Medical Clearance
+    </label>
 
-<label>
-Grade Level:
-<select id="grade">
-<option value="">-- Select Grade --</option>
-<option value="7">Grade 7</option>
-<option value="8">Grade 8</option>
-<option value="9">Grade 9</option>
-<option value="10">Grade 10</option>
-</select>
-</label>
+    <label for="grade">Grade Level</label>
+    <select id="grade">
+        <option value="">Select Grade</option>
+        <option value="7">Grade 7</option>
+        <option value="8">Grade 8</option>
+        <option value="9">Grade 9</option>
+        <option value="10">Grade 10</option>
+        <option value="11">Grade 11</option>
+        <option value="12">Grade 12</option>
+    </select>
 
-<label>
-Section:
-<select id="section">
-<option value="">-- Select Section --</option>
-<option value="Ruby">Ruby</option>
-<option value="Sapphire">Sapphire</option>
-<option value="Emerald">Emerald</option>
-<option value="Topaz">Topaz</option>
-<option value="Jade">Jade</option>
-</select>
-</label>
+    <label for="section">Section</label>
+    <input type="text" id="section" placeholder="e.g. Rizal">
 
-<button onclick="checkEligibility()">Check Eligibility</button>
+    <button onclick="checkEligibility()">Check Eligibility</button>
 
-<div id="result"></div>
+    <div id="result"></div>
 </div>
 
 <script>
@@ -86,58 +102,38 @@ function checkEligibility() {
     const registered = document.getElementById("registered").checked;
     const medical = document.getElementById("medical").checked;
     const grade = document.getElementById("grade").value;
-    const section = document.getElementById("section").value;
     const result = document.getElementById("result");
 
+    const teams = [
+        "Blue Bears 🐻",
+        "Red Bulldogs 🐶",
+        "Yellow Tigers 🐯",
+        "Green Hornets 🐝"
+    ];
+
     if (!registered) {
-        result.innerHTML = "❌ Please register online for the Intramurals. You may do so through the official school website.";
+        result.style.color = "red";
+        result.innerHTML = "❌ Please register online for the Intramurals.";
         return;
     }
 
     if (!medical) {
-        result.innerHTML = "❌ Please secure a medical clearance. You may visit the school clinic for assistance.";
+        result.style.color = "red";
+        result.innerHTML = "❌ Please secure a medical clearance.";
         return;
     }
 
-    if (!grade || !section) {
-        result.innerHTML = "❌ Please select your grade and section.";
+    if (grade < 7 || grade > 10) {
+        result.style.color = "red";
+        result.innerHTML = "❌ Only students from Grades 7–10 are eligible.";
         return;
     }
 
-    const teams = {
-        "7-Ruby": "Yellow Tigers",
-        "7-Sapphire": "Red Bulldogs",
-        "7-Emerald": "Blue Bears",
-        "7-Topaz": "Green Hornets",
-
-        "8-Emerald": "Yellow Tigers",
-        "8-Ruby": "Red Bulldogs",
-        "8-Topaz": "Blue Bears",
-        "8-Sapphire": "Green Hornets",
-        "8-Jade": "Blue Bears",
-
-        "9-Sapphire": "Yellow Tigers",
-        "9-Topaz": "Red Bulldogs",
-        "9-Ruby": "Blue Bears",
-        "9-Jade": "Green Hornets",
-        "9-Emerald": "Green Hornets",
-
-        "10-Sapphire": "Yellow Tigers",
-        "10-Emerald": "Red Bulldogs",
-        "10-Topaz": "Blue Bears",
-        "10-Ruby": "Green Hornets"
-    };
-
-    const key = grade + "-" + section;
-
-    if (!teams[key]) {
-        result.innerHTML = "❌ Section not listed for Intramurals.";
-        return;
-    }
-
+    const randomTeam = teams[Math.floor(Math.random() * teams.length)];
+    result.style.color = "green";
     result.innerHTML = `
-        🎉 Congratulations! You are eligible for Intramurals! <br>
-        🏅 Your team is: <strong>${teams[key]}</strong>
+        🎉 Congratulations! You are eligible to join the Intramurals!<br>
+        🏆 Your assigned team is: <strong>${randomTeam}</strong>
     `;
 }
 </script>
